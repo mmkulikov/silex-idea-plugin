@@ -8,8 +8,7 @@ import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import sk.sorien.pimpleplugin.pimple.ContainerResolver;
-import sk.sorien.pimpleplugin.pimple.JsonFileContainer;
+import sk.sorien.pimpleplugin.pimple.*;
 import sk.sorien.pimpleplugin.ui.ContainerStatusBarWidget;
 
 /**
@@ -32,7 +31,9 @@ public class ProjectComponent implements com.intellij.openapi.components.Project
             containerStatusBarWidget.setText("");
         }
 
-        ContainerResolver.put(project, new JsonFileContainer(project, Configuration.getInstance(project).containerDefinitionFileName));
+        Configuration conf = Configuration.getInstance(project);
+        Container jsonContainer = new JsonFileContainer(project, conf.containerDefinitionFileName);
+        ContainerResolver.put(project, jsonContainer);
     }
 
     public void projectClosed() {

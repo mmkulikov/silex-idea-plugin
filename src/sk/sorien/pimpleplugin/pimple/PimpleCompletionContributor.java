@@ -29,7 +29,7 @@ public class PimpleCompletionContributor extends CompletionContributor {
                                    ProcessingContext context,
                                    @NotNull CompletionResultSet resultSet) {
 
-            PsiElement element = parameters.getPosition().getParent();
+             PsiElement element = parameters.getPosition().getParent();
             Project project = element.getProject();
 
             if(!ProjectComponent.isEnabled(project)) {
@@ -62,6 +62,10 @@ public class PimpleCompletionContributor extends CompletionContributor {
     }
 
     private static class ExtendsMethodParameterListCompletionProvider extends CompletionProvider<CompletionParameters> {
+        protected ExtendsMethodParameterListCompletionProvider() {
+            super();
+        }
+
         public void addCompletions(@NotNull CompletionParameters parameters,
                                    ProcessingContext context,
                                    @NotNull CompletionResultSet resultSet) {
