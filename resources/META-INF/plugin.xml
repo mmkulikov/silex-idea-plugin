@@ -12,7 +12,7 @@
   <change-notes><![CDATA[
     <h2>1.0.0</h2>
     <ul>
-      <li>Support PhpStorm 2017.3 and</li>
+      <li>Support PhpStorm 2017.x</li>
     </ul>
     <h2>0.9.9</h2>
     <ul>
