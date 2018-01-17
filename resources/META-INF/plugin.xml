@@ -1,13 +1,13 @@
 <idea-plugin url="https://github.com/c0nstantx/silex-idea-plugin">
   <id>c0nstantx.phpstorm.silex.plugin.id</id>
   <name>Pimple Plugin</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <vendor email="kostasxx@gmail.com" url="https://github.com/c0nstantx">C0nstantx</vendor>
 
   <description><![CDATA[
     <h1>Code completion for Pimple PHP Dependency Injection Container</h1>
     <p>This plugin is based on Silex/Pimple Plugin (https://plugins.jetbrains.com/plugin/7809-silex-pimple-plugin)</p>
-    <p>Plugin needs pimple container dump (pimple.json) in project root directory, to create it follow instruction at https://github.com/c0nstantx/silex-pimple-dumper</p>
+    <p>Plugin needs pimple container dump (pimple.json) in project root directory. To create it follow instruction at https://github.com/c0nstantx/silex-pimple-dumper</p>
   ]]></description>
 
   <change-notes><![CDATA[
