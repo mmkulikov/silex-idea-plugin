@@ -24,8 +24,8 @@ public class Signature {
             base = "";
             parameter = "";
 
-            if (expression != null) {
-                int len = expression.length();
+            int len = expression.length();
+            if (expression != null && len > 0) {
                 int start = -1;
                 int counter = 0;
 

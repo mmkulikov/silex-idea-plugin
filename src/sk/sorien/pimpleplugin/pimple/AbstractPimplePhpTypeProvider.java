@@ -13,26 +13,7 @@ import java.util.List;
  */
 public class AbstractPimplePhpTypeProvider {
 
-    private Signature getChildElementSignature(PsiElement element) {
-
-        element = PsiTreeUtil.getChildOfAnyType(element, Variable.class, FieldReference.class, ArrayAccessExpression.class);
-        if (element == null) {
-            return null;
-        }
-
-        Signature signature = new Signature();
-
-        if (element instanceof PhpReference) {
-            signature.set(((PhpReference) element).getSignature());
-        }
-        else if (element instanceof ArrayAccessExpression) {
-            signature.set(getTypeForArrayAccess(element));
-        }
-
-        return signature.hasValidClassSignature() ? signature : null;
-    }
-
-    private String getStringOrSignature(PsiElement element) {
+    protected String getStringOrSignature(PsiElement element) {
 
         if (element instanceof StringLiteralExpression) {
             return Utils.normalizedString((StringLiteralExpression) element);
@@ -42,49 +23,6 @@ public class AbstractPimplePhpTypeProvider {
         }
 
         return null;
-    }
-
-    protected String getTypeForArrayAccess(PsiElement e) {
-
-        ArrayAccessExpression arrayAccessExpression;
-        Boolean internalResolve = false;
-
-        if (e instanceof ArrayAccessExpression) {
-            arrayAccessExpression = (ArrayAccessExpression)e;
-        }
-        else if (e instanceof NewExpression)
-        {
-            ClassReference[] classReferences = PsiTreeUtil.getChildrenOfType(e, ClassReference.class);
-            if (classReferences == null || classReferences.length != 1) {
-                return null;
-            }
-
-            ArrayAccessExpression[] arrayAccessExpressions = PsiTreeUtil.getChildrenOfType(classReferences[0], ArrayAccessExpression.class);
-            if (arrayAccessExpressions == null || arrayAccessExpressions.length != 1) {
-                return null;
-            }
-
-            arrayAccessExpression = arrayAccessExpressions[0];
-            internalResolve = true;
-        }
-        else return null;
-
-        Signature signature = getChildElementSignature(arrayAccessExpression);
-        if (signature == null) {
-            return null;
-        }
-
-        ArrayIndex arrayIndex = arrayAccessExpression.getIndex();
-        if (arrayIndex == null) {
-            return null;
-        }
-
-        String serviceName = getStringOrSignature(arrayIndex.getValue());
-        if (serviceName == null) {
-            return null;
-        }
-
-        return signature.toString() + '[' + (internalResolve ? "@" : "") + serviceName + ']';
     }
 
     protected String getTypeForParameterOfAnonymousFunction(PsiElement e) {
@@ -208,6 +146,68 @@ public class AbstractPimplePhpTypeProvider {
         }
 
         return null;
+    }
+
+    protected String getTypeForArrayAccess(PsiElement e) {
+
+        ArrayAccessExpression arrayAccessExpression;
+        Boolean internalResolve = false;
+
+        if (e instanceof ArrayAccessExpression) {
+            arrayAccessExpression = (ArrayAccessExpression)e;
+        }
+        else if (e instanceof NewExpression)
+        {
+            ClassReference[] classReferences = PsiTreeUtil.getChildrenOfType(e, ClassReference.class);
+            if (classReferences == null || classReferences.length != 1) {
+                return null;
+            }
+
+            ArrayAccessExpression[] arrayAccessExpressions = PsiTreeUtil.getChildrenOfType(classReferences[0], ArrayAccessExpression.class);
+            if (arrayAccessExpressions == null || arrayAccessExpressions.length != 1) {
+                return null;
+            }
+
+            arrayAccessExpression = arrayAccessExpressions[0];
+            internalResolve = true;
+        }
+        else return null;
+
+        Signature signature = getChildElementSignature(arrayAccessExpression);
+        if (signature == null) {
+            return null;
+        }
+
+        ArrayIndex arrayIndex = arrayAccessExpression.getIndex();
+        if (arrayIndex == null) {
+            return null;
+        }
+
+        String serviceName = getStringOrSignature(arrayIndex.getValue());
+        if (serviceName == null) {
+            return null;
+        }
+
+        return signature.toString() + '[' + (internalResolve ? "@" : "") + serviceName + ']';
+    }
+
+    private Signature getChildElementSignature(PsiElement element) {
+
+        element = PsiTreeUtil.getChildOfAnyType(element, Variable.class, FieldReference.class, ArrayAccessExpression.class);
+        if (element == null) {
+            return null;
+        }
+
+        Signature signature = new Signature();
+
+        if (element instanceof PhpReference) {
+            signature.set(((PhpReference) element).getSignature());
+        }
+        else if (element instanceof ArrayAccessExpression) {
+            signature.set(getTypeForArrayAccess(element));
+        }
+
+        return signature.hasValidClassSignature() ? signature : null;
     }
 
 }
