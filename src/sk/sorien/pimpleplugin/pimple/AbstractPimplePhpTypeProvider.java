@@ -191,7 +191,7 @@ public class AbstractPimplePhpTypeProvider {
         return signature.toString() + '[' + (internalResolve ? "@" : "") + serviceName + ']';
     }
 
-    private Signature getChildElementSignature(PsiElement element) {
+    protected Signature getChildElementSignature(PsiElement element) {
 
         element = PsiTreeUtil.getChildOfAnyType(element, Variable.class, FieldReference.class, ArrayAccessExpression.class);
         if (element == null) {

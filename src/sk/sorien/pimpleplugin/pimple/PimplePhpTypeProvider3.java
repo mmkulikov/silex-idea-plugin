@@ -2,7 +2,6 @@ package sk.sorien.pimpleplugin.pimple;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.lang.psi.elements.*;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
@@ -80,66 +79,4 @@ public class PimplePhpTypeProvider3 extends AbstractPimplePhpTypeProvider implem
 
         return collection;
     }
-
-    protected String getTypeForArrayAccess(PsiElement e) {
-
-        ArrayAccessExpression arrayAccessExpression;
-        Boolean internalResolve = false;
-
-        if (e instanceof ArrayAccessExpression) {
-            arrayAccessExpression = (ArrayAccessExpression)e;
-        } else if (e instanceof NewExpression) {
-            ClassReference[] classReferences = PsiTreeUtil.getChildrenOfType(e, ClassReference.class);
-            if (classReferences == null || classReferences.length != 1) {
-                return null;
-            }
-
-            ArrayAccessExpression[] arrayAccessExpressions = PsiTreeUtil.getChildrenOfType(classReferences[0], ArrayAccessExpression.class);
-            if (arrayAccessExpressions == null || arrayAccessExpressions.length != 1) {
-                return null;
-            }
-
-            arrayAccessExpression = arrayAccessExpressions[0];
-            internalResolve = true;
-        } else {
-            return null;
-        }
-
-        Signature signature = getChildElementSignature(arrayAccessExpression);
-        if (signature == null) {
-            return null;
-        }
-
-        ArrayIndex arrayIndex = arrayAccessExpression.getIndex();
-        if (arrayIndex == null) {
-            return null;
-        }
-
-        String serviceName = getStringOrSignature(arrayIndex.getValue());
-        if (serviceName == null) {
-            return null;
-        }
-
-        return signature.toString() + '[' + (internalResolve ? "@" : "") + serviceName + ']';
-    }
-
-    private Signature getChildElementSignature(PsiElement element) {
-
-        PsiElement child = PsiTreeUtil.getChildOfAnyType(element, Variable.class, FieldReference.class, ArrayAccessExpression.class);
-        if (child == null) {
-            return null;
-        }
-
-        Signature signature = new Signature();
-
-        if (child instanceof PhpReference) {
-            signature.set(((PhpReference) child).getSignature());
-        }
-        else if (child instanceof ArrayAccessExpression) {
-            signature.set(getTypeForArrayAccess(child));
-        }
-
-        return signature.hasValidClassSignature() ? signature : null;
-    }
-
 }

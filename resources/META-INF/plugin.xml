@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/c0nstantx/silex-idea-plugin">
   <id>c0nstantx.phpstorm.silex.plugin.id</id>
   <name>Pimple Plugin</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <vendor email="kostasxx@gmail.com" url="https://github.com/c0nstantx">C0nstantx</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,10 @@
   ]]></description>
 
   <change-notes><![CDATA[
+    <h2>1.0.2</h2>
+    <ul>
+      <li>Fix type provider</li>
+    </ul>
     <h2>1.0.1</h2>
     <ul>
       <li>Fix signature expression check</li>
