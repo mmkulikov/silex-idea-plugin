@@ -7,10 +7,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="PhpStorm PS-183.5912.26" jdkType="IDEA JDK" />
+    <orderEntry type="library" exported="" name="json-simple-1.1.1" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="php" level="project" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="php-openapi" level="project" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="json-simple-1.1.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="php" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="php-openapi" level="project" />
   </component>
 </module>

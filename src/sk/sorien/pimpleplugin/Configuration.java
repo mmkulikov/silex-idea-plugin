@@ -10,13 +10,15 @@ import java.io.File;
 /**
  * @author Stanislav Turza
  */
+
 @State(
-        name = "SilexPluginSettings",
-        storages = {
-                @Storage(id = "default", file = StoragePathMacros.PROJECT_FILE),
-                @Storage(id = "dir", file = StoragePathMacros.PROJECT_CONFIG_DIR + "/silex-plugin.xml", scheme = StorageScheme.DIRECTORY_BASED)
-        }
+        name = "SilexPluginSettings"//,
+//        storages = {
+//                @Storage(id = "default", file = StoragePathMacros.PROJECT_FILE),
+//                @Storage(id = "dir", file = StoragePathMacros.PROJECT_CONFIG_DIR + "/silex-plugin.xml", scheme = StorageScheme.DIRECTORY_BASED)
+//        }
 )
+
 public class Configuration implements PersistentStateComponent<Configuration> {
 
     private static final String CONTAINER_JSON_DUMP = "pimple.json";
