@@ -3,6 +3,7 @@ package sk.sorien.pimpleplugin.pimple;
 import com.intellij.codeInsight.completion.InsertHandler;
 import com.intellij.codeInsight.completion.InsertionContext;
 import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -223,11 +224,14 @@ public class Utils {
 
         Signature signature = new Signature(expression);
         Collection<? extends PhpNamedElement> collection;
-
-        if (expression.startsWith("#")) {
-            collection = phpIndex.getBySignature(signature.base, null, 0);
-        } else {
-            collection = phpIndex.getClassesByFQN(signature.base);
+        try {
+            if (expression.startsWith("#")) {
+                collection = phpIndex.getBySignature(signature.base, null, 0);
+            } else {
+                collection = phpIndex.getClassesByFQN(signature.base);
+            }
+        } catch (IndexNotReadyException ex) {
+            return false;
         }
 
         if (collection.size() == 0) {

@@ -1,5 +1,6 @@
 package sk.sorien.pimpleplugin.pimple;
 
+import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.jetbrains.php.PhpIndex;
@@ -60,10 +61,16 @@ public class PimplePhpTypeProvider3 extends AbstractPimplePhpTypeProvider implem
         }
 
         // if it's not a service try to get original type
-        Collection<? extends PhpNamedElement> collection = phpIndex.getBySignature(signature.base, set, i);
-        if (collection.size() == 0) {
+        Collection<? extends PhpNamedElement> collection;
+        try {
+             collection = phpIndex.getBySignature(signature.base, set, i);
+            if (collection.size() == 0) {
+                return Collections.emptySet();
+            }
+        } catch (IndexNotReadyException ignored) {
             return Collections.emptySet();
         }
+
 
         // original type can be array (#C\ClassType[]) resolve to proper value type
         PhpNamedElement element = collection.iterator().next();
