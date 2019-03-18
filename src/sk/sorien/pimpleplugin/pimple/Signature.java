@@ -18,14 +18,17 @@ public class Signature {
     }
 
     public void set(@Nullable String expression) {
+        base = "";
+        parameter = "";
 
         try
         {
-            base = "";
-            parameter = "";
+            if (expression == null) {
+                return;
+            }
 
             int len = expression.length();
-            if (expression != null && len > 0) {
+            if (len > 0) {
                 int start = -1;
                 int counter = 0;
 
