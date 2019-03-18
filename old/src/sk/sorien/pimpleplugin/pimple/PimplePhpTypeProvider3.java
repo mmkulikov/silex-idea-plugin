@@ -38,7 +38,7 @@ public class PimplePhpTypeProvider3 extends AbstractPimplePhpTypeProvider implem
         Collection<? extends PhpNamedElement> col = getBySignature(signature, null, 0, project);
 
         // Return first element
-        for (PhpNamedElement elem : col) {
+        for (PhpNamedElement elem: col) {
             return elem.getType();
         }
 
@@ -52,7 +52,7 @@ public class PimplePhpTypeProvider3 extends AbstractPimplePhpTypeProvider implem
         Signature signature = new Signature(s);
 
         // try to resolve service type
-        if (ProjectComponent.isEnabled(project) && signature.hasParameter()) {
+        if(ProjectComponent.isEnabled(project) && signature.hasParameter()) {
             ArrayList<String> parameters = new ArrayList<String>();
             if (Utils.findPimpleContainer(phpIndex, s, parameters)) {
                 return phpIndex.getClassesByFQN(getClassNameFromParameters(phpIndex, project, parameters));
