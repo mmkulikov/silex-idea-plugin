@@ -8,7 +8,7 @@
     <h1>Code completion for Pimple PHP Dependency Injection Container</h1>
     <p>This plugin is based on Silex/Pimple Plugin (https://plugins.jetbrains.com/plugin/7809-silex-pimple-plugin)</p>
     <p>It forks off https://github.com/c0nstantx/silex-idea-plugin</p>
-    <p>Plugin needs pimple container dump (pimple.json) in project root directory. To create it follow instruction at https://github.com/c0nstantx/silex-pimple-dumper</p>
+    <p>Plugin needs pimple container dump (pimple.json) in project root directory. To create it follow instruction at https://github.com/mmkulikov/silex-pimple-dumper</p>
   ]]></description>
 
   <change-notes><![CDATA[
