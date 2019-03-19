@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 
 public class ContainerStatusBarWidget extends EditorBasedWidget implements com.intellij.openapi.wm.StatusBarWidget.TextPresentation, com.intellij.openapi.wm.StatusBarWidget {
+    public static final String WIDGET_ID = "silex.statusbar.widget";
 
     private StatusBar statusBar;
     private String text;
@@ -29,7 +30,7 @@ public class ContainerStatusBarWidget extends EditorBasedWidget implements com.i
     @Override
 
     public String ID() {
-        return "silex.statusbar.widget";
+        return WIDGET_ID;
     }
 
     @Nullable

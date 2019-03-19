@@ -1,13 +1,11 @@
 package sk.sorien.pimpleplugin.pimple;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.WindowManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import sk.sorien.pimpleplugin.ProjectComponent;
-import sk.sorien.pimpleplugin.ui.ContainerStatusBarWidget;
 import sk.sorien.pimpleplugin.utils.ContainerMap;
 
 import java.io.File;
@@ -30,12 +28,12 @@ public class JsonFileContainer extends Container {
         super(project);
         file = new File(fileName);
 
-        ContainerStatusBarWidget sb = (ContainerStatusBarWidget)WindowManager.getInstance().getStatusBar(project).getWidget("silex.statusbar.widget");
+        ProjectComponent projectComponent = project.getComponent(ProjectComponent.class);
         if (!file.exists()) {
             ProjectComponent.warning("Pimple Dump file doesn't exists.", project);
-            sb.setText("Missing");
+            projectComponent.setStatusBarText("Missing");
         } else {
-            sb.setText("Loaded");
+            projectComponent.setStatusBarText("Loaded");
         }
     }
 

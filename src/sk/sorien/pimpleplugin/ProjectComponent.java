@@ -15,20 +15,21 @@ import sk.sorien.pimpleplugin.ui.ContainerStatusBarWidget;
  * @author Stanislav Turza
  */
 public class ProjectComponent implements com.intellij.openapi.components.ProjectComponent {
-
     private final Project project;
+    private StatusBar statusBar;
+    private ContainerStatusBarWidget containerStatusBarWidget;
 
     public ProjectComponent(Project project) {
         this.project = project;
     }
 
     public void projectOpened() {
-        StatusBar statusBar = WindowManager.getInstance().getStatusBar(project);
+        statusBar = WindowManager.getInstance().getStatusBar(project);
         if (statusBar != null) {
-            ContainerStatusBarWidget containerStatusBarWidget = new ContainerStatusBarWidget(project);
+            containerStatusBarWidget = new ContainerStatusBarWidget(project);
             statusBar.addWidget(containerStatusBarWidget);
 
-            containerStatusBarWidget.setText("");
+            containerStatusBarWidget.setText("Loading...");
         }
 
         Configuration conf = Configuration.getInstance(project);
@@ -37,7 +38,13 @@ public class ProjectComponent implements com.intellij.openapi.components.Project
     }
 
     public void projectClosed() {
+        statusBar.removeWidget(ContainerStatusBarWidget.WIDGET_ID);
+
         ContainerResolver.remove(project);
+    }
+
+    public void setStatusBarText(String text) {
+        containerStatusBarWidget.setText(text);
     }
 
     public static boolean isEnabled(@Nullable Project project) {
