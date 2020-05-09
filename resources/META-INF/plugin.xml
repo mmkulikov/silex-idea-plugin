@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/mmkulikov/silex-idea-plugin">
   <id>mmkulikov.phpstorm.silex.plugin.id</id>
   <name>Pimple Plugin</name>
-  <version>1.0.4</version>
+  <version>1.0.4.3</version>
   <vendor email="mk@itgrco.com" url="https://github.com/mmkulikov">mmkulikov</vendor>
 
   <description><![CDATA[
@@ -12,6 +12,10 @@
   ]]></description>
 
   <change-notes><![CDATA[
+    <h2>1.0.4</h2>
+    <ul>
+      <li>Support PhpStorm 2020.x</li>
+    </ul>
     <h2>1.0.3</h2>
     <ul>
       <li>Support PhpStorm 2018.x</li>
@@ -57,7 +61,7 @@
   <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.jetbrains.php">
-        <typeProvider3 implementation="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider3"/>
+        <typeProvider4 implementation="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider4"/>
     </extensions>
 
   <extensions defaultExtensionNs="com.intellij">

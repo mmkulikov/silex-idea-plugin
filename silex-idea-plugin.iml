@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/old" />
       <excludeFolder url="file://$MODULE_DIR$/old_src" />
+      <excludeFolder url="file://$MODULE_DIR$/version" />
     </content>
     <orderEntry type="jdk" jdkName="PhpStorm PS-201.7223.96" jdkType="IDEA JDK" />
     <orderEntry type="library" exported="" name="json-simple-1.1.1" level="project" />

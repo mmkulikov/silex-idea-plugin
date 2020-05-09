@@ -3,6 +3,7 @@ package sk.sorien.pimpleplugin;
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -44,7 +45,7 @@ public class Configuration implements PersistentStateComponent<Configuration> {
     }
 
     @Override
-    public void loadState(Configuration configuration) {
+    public void loadState(@NotNull Configuration configuration) {
         XmlSerializerUtil.copyBean(configuration, this);
     }
 }
