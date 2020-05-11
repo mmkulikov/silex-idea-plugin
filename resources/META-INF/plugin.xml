@@ -1,7 +1,7 @@
 <idea-plugin url="https://github.com/mmkulikov/silex-idea-plugin">
   <id>mmkulikov.phpstorm.silex.plugin.id</id>
   <name>Pimple Plugin</name>
-  <version>1.0.4.3</version>
+  <version>1.0.4</version>
   <vendor email="mk@itgrco.com" url="https://github.com/mmkulikov">mmkulikov</vendor>
 
   <description><![CDATA[
@@ -53,23 +53,18 @@
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
   <depends>com.intellij.modules.lang</depends>
   <depends>com.jetbrains.php</depends>
   <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.jetbrains.php">
-        <typeProvider4 implementation="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider4"/>
-    </extensions>
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <typeProvider4 implementation="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider4"/>
+  </extensions>
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
     <completion.contributor language="PHP" order="FIRST" implementationClass="sk.sorien.pimpleplugin.pimple.PimpleCompletionContributor"/>
-    <!--<completion.contributor language="PHP" order="FIRST" implementationClass="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider3"/>-->
     <psi.referenceContributor implementation="sk.sorien.pimpleplugin.pimple.PimpleReferenceContributor"/>
-    <!--<php.typeProvider2 implementation="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider2"/>-->
 
     <projectConfigurable instance="sk.sorien.pimpleplugin.ui.ConfigurationForm" displayName="Silex Plugin"/>
     <projectService serviceImplementation="sk.sorien.pimpleplugin.Configuration"/>

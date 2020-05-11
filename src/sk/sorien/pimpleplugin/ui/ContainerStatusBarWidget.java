@@ -19,7 +19,7 @@ public class ContainerStatusBarWidget extends EditorBasedWidget implements com.i
 
     private StatusBar statusBar;
     private String text;
-    private Project project;
+    private final Project project;
 
     public ContainerStatusBarWidget(Project project) {
         super(project);

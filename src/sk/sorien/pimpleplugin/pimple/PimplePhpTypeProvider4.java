@@ -18,11 +18,14 @@ import java.util.Set;
 
 /**
  * @author Konstantinos Christofilos <kostasxx@gmail.com>
+ * @author Mikhail Kulikov <mmkulikov67@gmail.com>
  */
 public class PimplePhpTypeProvider4 extends AbstractPimplePhpTypeProvider implements PhpTypeProvider4 {
+    private static final char KEY = 'Š';
+
     @Override
     public char getKey() {
-        return 'Š';
+        return KEY;
     }
 
     @Override
@@ -36,9 +39,16 @@ public class PimplePhpTypeProvider4 extends AbstractPimplePhpTypeProvider implem
             return null;
         }
         Project project = psiElement.getProject();
-        Signature sig = new Signature();
-        sig.set(signature);
-        Collection<? extends PhpNamedElement> col = getBySignature(signature, null, 0, project);
+        if (DumbService.isDumb(project)) {
+            return null;
+        }
+
+        Collection<? extends PhpNamedElement> col;
+        try {
+            col = getBySignature(signature, null, 0, project);
+        } catch (Exception e) {
+            return null;
+        }
 
         // Return first element
         for (PhpNamedElement elem : col) {
@@ -54,24 +64,30 @@ public class PimplePhpTypeProvider4 extends AbstractPimplePhpTypeProvider implem
     }
 
     @Override
-    public Collection<? extends PhpNamedElement> getBySignature(String s, Set<String> set, int i, Project project) {
-        if (DumbService.isDumb(project)) return null;
+    public Collection<? extends PhpNamedElement> getBySignature(String s, Set<String> set, int depth, Project project) {
+        if (DumbService.isDumb(project)) {
+            return Collections.emptySet();
+        }
 
         PhpIndex phpIndex = PhpIndex.getInstance(project);
         Signature signature = new Signature(s);
 
-        // try to resolve service type
-        if (ProjectComponent.isEnabled(project) && signature.hasParameter()) {
-            ArrayList<String> parameters = new ArrayList<String>();
-            if (Utils.findPimpleContainer(phpIndex, s, parameters)) {
-                return phpIndex.getClassesByFQN(getClassNameFromParameters(phpIndex, project, parameters));
+        try {
+            // try to resolve service type
+            if (ProjectComponent.isEnabled(project) && signature.hasParameter()) {
+                ArrayList<String> parameters = new ArrayList<String>();
+                if (Utils.findPimpleContainer(phpIndex, s, parameters)) {
+                    return phpIndex.getClassesByFQN(getClassNameFromParameters(phpIndex, project, parameters));
+                }
             }
+        } catch (Exception e) {
+            return Collections.emptySet();
         }
 
         // if it's not a service try to get original type
         Collection<? extends PhpNamedElement> collection;
         try {
-            collection = phpIndex.getBySignature(signature.base, set, i);
+            collection = phpIndex.getBySignature(signature.base, set, ++depth);
             if (collection.size() == 0) {
                 return Collections.emptySet();
             }

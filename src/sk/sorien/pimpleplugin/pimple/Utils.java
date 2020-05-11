@@ -11,6 +11,7 @@ import com.intellij.psi.util.PsiUtilCore;
 import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.lang.psi.elements.*;
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -216,7 +217,7 @@ public class Utils {
         return findPimpleContainer(phpIndex, expression, parameters, 0);
     }
 
-    private static Boolean findPimpleContainer(PhpIndex phpIndex, String expression, ArrayList<String> parameters, int depth) {
+    private static @NotNull Boolean findPimpleContainer(PhpIndex phpIndex, String expression, ArrayList<String> parameters, int depth) {
 
         if (++depth > 5) {
             return false;

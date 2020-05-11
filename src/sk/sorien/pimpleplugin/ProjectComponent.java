@@ -29,7 +29,8 @@ public class ProjectComponent implements com.intellij.openapi.components.Project
             containerStatusBarWidget = new ContainerStatusBarWidget(project);
             statusBar.addWidget(containerStatusBarWidget);
 
-            containerStatusBarWidget.setText("Loading...");
+            setStatusBarText("Loading...");
+            //containerStatusBarWidget.setText("Loading...");
         }
 
         Configuration conf = Configuration.getInstance(project);
@@ -38,13 +39,17 @@ public class ProjectComponent implements com.intellij.openapi.components.Project
     }
 
     public void projectClosed() {
-        statusBar.removeWidget(ContainerStatusBarWidget.WIDGET_ID);
+        if (statusBar != null && containerStatusBarWidget != null) {
+            statusBar.removeWidget(ContainerStatusBarWidget.WIDGET_ID);
+        }
 
         ContainerResolver.remove(project);
     }
 
     public void setStatusBarText(String text) {
-        containerStatusBarWidget.setText(text);
+        if (containerStatusBarWidget != null) {
+            containerStatusBarWidget.setText(text);
+        }
     }
 
     public static boolean isEnabled(@Nullable Project project) {
@@ -64,13 +69,13 @@ public class ProjectComponent implements com.intellij.openapi.components.Project
         ContainerResolver.put(project, new JsonFileContainer(project, Configuration.getInstance(project).containerDefinitionFileName));
     }
 
-    public void initComponent() {
-
-    }
-
-    public void disposeComponent() {
-
-    }
+//    public void initComponent() {
+//
+//    }
+//
+//    public void disposeComponent() {
+//
+//    }
 
     @NotNull
     public String getComponentName() {
