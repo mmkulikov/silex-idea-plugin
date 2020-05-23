@@ -19,7 +19,7 @@ public class PimpleReferenceContributor extends PsiReferenceContributor {
         );
     }
 
-    private class ServiceReferenceProvider extends PsiReferenceProvider {
+    private static class ServiceReferenceProvider extends PsiReferenceProvider {
         @NotNull
         @Override
         public PsiReference[] getReferencesByElement(@NotNull PsiElement psiElement, @NotNull ProcessingContext processingContext) {

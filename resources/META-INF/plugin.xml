@@ -6,9 +6,13 @@
 
   <description><![CDATA[
     <h1>Code completion for Pimple PHP Dependency Injection Container</h1>
-    <p>This plugin is based on Silex/Pimple Plugin (https://plugins.jetbrains.com/plugin/7809-silex-pimple-plugin)</p>
-    <p>It forks off https://github.com/c0nstantx/silex-idea-plugin</p>
-    <p>Plugin needs pimple container dump (pimple.json) in project root directory. To create it follow instruction at https://github.com/mmkulikov/silex-pimple-dumper</p>
+    <p>Source code on <a href="https://github.com/mmkulikov/silex-idea-plugin">GitHub</a></p>
+    <br>
+    <p>This plugin is based on Silex/Pimple Plugin (<u>https://plugins.jetbrains.com/plugin/7809-silex-pimple-plugin</u>)</p>
+    <p>It forks off <u>https://github.com/c0nstantx/silex-idea-plugin</u></p>
+    <br>
+    <p>Plugin needs pimple container dump (<b>pimple.json</b>) in project root directory.<br>
+    To create it follow instruction at <a href="https://github.com/mmkulikov/silex-pimple-dumper">silex-pimple-dumper</a></p>
   ]]></description>
 
   <change-notes><![CDATA[
@@ -49,7 +53,7 @@
   ]]></change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="171.0"/>
+  <idea-version since-build="201.0"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->

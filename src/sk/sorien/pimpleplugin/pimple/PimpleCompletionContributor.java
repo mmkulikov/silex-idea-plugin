@@ -26,7 +26,7 @@ public class PimpleCompletionContributor extends CompletionContributor {
 
     private static class ArrayAccessCompletionProvider extends CompletionProvider<CompletionParameters> {
         public void addCompletions(@NotNull CompletionParameters parameters,
-                                   ProcessingContext context,
+                                   @NotNull ProcessingContext context,
                                    @NotNull CompletionResultSet resultSet) {
 
              PsiElement element = parameters.getPosition().getParent();
@@ -67,7 +67,7 @@ public class PimpleCompletionContributor extends CompletionContributor {
         }
 
         public void addCompletions(@NotNull CompletionParameters parameters,
-                                   ProcessingContext context,
+                                   @NotNull ProcessingContext context,
                                    @NotNull CompletionResultSet resultSet) {
 
             PsiElement element = parameters.getPosition().getParent();
@@ -100,7 +100,7 @@ public class PimpleCompletionContributor extends CompletionContributor {
 
     private static class RegisterFunctionValuesCompletionProvider extends CompletionProvider<CompletionParameters> {
         public void addCompletions(@NotNull CompletionParameters parameters,
-                                   ProcessingContext context,
+                                   @NotNull ProcessingContext context,
                                    @NotNull CompletionResultSet resultSet) {
 
             PsiElement stringLiteralExpression = parameters.getPosition().getParent();

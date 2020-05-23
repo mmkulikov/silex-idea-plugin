@@ -31,7 +31,7 @@ public class ContainerLookupElement extends LookupElement {
     }
 
     @Override
-    public void handleInsert(InsertionContext context) {
+    public void handleInsert(@NotNull InsertionContext context) {
         Utils.CONTAINER_INSERT_HANDLER.handleInsert(context, this);
     }
 }

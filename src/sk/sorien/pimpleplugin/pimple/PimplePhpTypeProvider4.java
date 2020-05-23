@@ -1,14 +1,17 @@
 package sk.sorien.pimpleplugin.pimple;
 
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.IndexNotReadyException;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.NoAccessDuringPsiEvents;
 import com.intellij.psi.PsiElement;
 import com.jetbrains.php.PhpIndex;
 import com.jetbrains.php.lang.psi.elements.PhpNamedElement;
 import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import com.jetbrains.php.lang.psi.resolve.types.PhpTypeProvider4;
 import org.jetbrains.annotations.Nullable;
+import sk.sorien.pimpleplugin.Configuration;
 import sk.sorien.pimpleplugin.ProjectComponent;
 
 import java.util.ArrayList;
@@ -30,32 +33,25 @@ public class PimplePhpTypeProvider4 extends AbstractPimplePhpTypeProvider implem
 
     @Override
     public @Nullable PhpType getType(PsiElement psiElement) {
+        Project project = psiElement.getProject();
+
+        if (!ProjectComponent.isEnabled(project)) {
+            return null;
+        }
+
+        if (DumbService.getInstance(project).isDumb() || NoAccessDuringPsiEvents.isInsideEventProcessing()) {
+            return null;
+        }
 
         String signature = getTypeForArrayAccess(psiElement);
         if (signature == null) {
             signature = getTypeForParameterOfAnonymousFunction(psiElement);
-        }
-        if (signature == null) {
-            return null;
-        }
-        Project project = psiElement.getProject();
-        if (DumbService.isDumb(project)) {
-            return null;
+            if (signature == null) {
+                return null;
+            }
         }
 
-        Collection<? extends PhpNamedElement> col;
-        try {
-            col = getBySignature(signature, null, 0, project);
-        } catch (Exception e) {
-            return null;
-        }
-
-        // Return first element
-        for (PhpNamedElement elem : col) {
-            return elem.getType();
-        }
-
-        return null;
+        return new PhpType().add("#" + this.getKey() + signature);
     }
 
     @Override
@@ -65,33 +61,20 @@ public class PimplePhpTypeProvider4 extends AbstractPimplePhpTypeProvider implem
 
     @Override
     public Collection<? extends PhpNamedElement> getBySignature(String s, Set<String> set, int depth, Project project) {
-        if (DumbService.isDumb(project)) {
-            return Collections.emptySet();
-        }
-
         PhpIndex phpIndex = PhpIndex.getInstance(project);
         Signature signature = new Signature(s);
 
-        try {
-            // try to resolve service type
-            if (ProjectComponent.isEnabled(project) && signature.hasParameter()) {
-                ArrayList<String> parameters = new ArrayList<String>();
-                if (Utils.findPimpleContainer(phpIndex, s, parameters)) {
-                    return phpIndex.getClassesByFQN(getClassNameFromParameters(phpIndex, project, parameters));
-                }
+        // try to resolve service type
+        if (ProjectComponent.isEnabled(project) && signature.hasParameter()) {
+            ArrayList<String> parameters = new ArrayList<String>();
+            if (Utils.findPimpleContainer(phpIndex, s, parameters)) {
+                return phpIndex.getClassesByFQN(getClassNameFromParameters(phpIndex, project, parameters));
             }
-        } catch (Exception e) {
-            return Collections.emptySet();
         }
 
         // if it's not a service try to get original type
-        Collection<? extends PhpNamedElement> collection;
-        try {
-            collection = phpIndex.getBySignature(signature.base, set, ++depth);
-            if (collection.size() == 0) {
-                return Collections.emptySet();
-            }
-        } catch (IndexNotReadyException ignored) {
+        Collection<? extends PhpNamedElement> collection = phpIndex.getBySignature(signature.base, set, ++depth);
+        if (collection.isEmpty()) {
             return Collections.emptySet();
         }
 
