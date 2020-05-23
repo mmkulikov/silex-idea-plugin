@@ -1,0 +1,90 @@
+<idea-plugin url="https://github.com/mmkulikov/silex-idea-plugin">
+  <id>mmkulikov.phpstorm.silex.plugin.id</id>
+  <name>Pimple Plugin</name>
+  <version>1.0.4</version>
+  <vendor email="mk@itgrco.com" url="https://github.com/mmkulikov">mmkulikov</vendor>
+
+  <description><![CDATA[
+    <h1>Code completion for Pimple PHP Dependency Injection Container</h1>
+    <p>Source code on <a href="https://github.com/mmkulikov/silex-idea-plugin">GitHub</a></p>
+    <br>
+    <p>This plugin is based on Silex/Pimple Plugin (<u>https://plugins.jetbrains.com/plugin/7809-silex-pimple-plugin</u>)</p>
+    <p>It forks off <u>https://github.com/c0nstantx/silex-idea-plugin</u></p>
+    <br>
+    <p>Plugin needs pimple container dump (<b>pimple.json</b>) in project root directory.<br>
+    To create it follow instruction at <a href="https://github.com/mmkulikov/silex-pimple-dumper">silex-pimple-dumper</a></p>
+  ]]></description>
+
+  <change-notes><![CDATA[
+    <h2>1.0.4</h2>
+    <ul>
+      <li>Support PhpStorm 2020.x</li>
+    </ul>
+    <h2>1.0.3</h2>
+    <ul>
+      <li>Support PhpStorm 2018.x</li>
+    </ul>
+    <h2>1.0.2</h2>
+    <ul>
+      <li>Fix type provider</li>
+    </ul>
+    <h2>1.0.1</h2>
+    <ul>
+      <li>Fix signature expression check</li>
+    </ul>
+    <h2>1.0.0</h2>
+    <ul>
+      <li>Support PhpStorm 2017.x</li>
+    </ul>
+    <h2>0.9.9</h2>
+    <ul>
+      <li>Bug fixes</li>
+    </ul>
+    <h2>0.9.8</h2>
+    <ul>
+      <li>Autocomplete fine tuning (whole pimple container should be covered)</li>
+      <li>Common functionality covered by tests</li>
+    </ul>
+    <h2>0.9.7</h2>
+    <ul>
+      <li>SubContainer type resolution and autocomplete</li>
+      <li>Resolve constants in ArrayAccess</li>
+    </ul>
+  ]]></change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="201.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.jetbrains.php</depends>
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.jetbrains.php">
+    <typeProvider4 implementation="sk.sorien.pimpleplugin.pimple.PimplePhpTypeProvider4"/>
+  </extensions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <completion.contributor language="PHP" order="FIRST" implementationClass="sk.sorien.pimpleplugin.pimple.PimpleCompletionContributor"/>
+    <psi.referenceContributor implementation="sk.sorien.pimpleplugin.pimple.PimpleReferenceContributor"/>
+
+    <projectConfigurable instance="sk.sorien.pimpleplugin.ui.ConfigurationForm" displayName="Silex Plugin"/>
+    <projectService serviceImplementation="sk.sorien.pimpleplugin.Configuration"/>
+    <spellchecker.bundledDictionaryProvider implementation="sk.sorien.pimpleplugin.spellchecker.DictionaryProvider"/>
+    <spellchecker.support language="PHP" implementationClass="sk.sorien.pimpleplugin.spellchecker.SpellcheckingStrategy" order="FIRST"/>
+  </extensions>
+
+  <project-components>
+    <component>
+      <implementation-class>sk.sorien.pimpleplugin.ProjectComponent</implementation-class>
+      <loadForDefaultProject/>
+    </component>
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>
